@@ -8,25 +8,18 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Scripts
 {
-    public class EnemyMovement : MonoBehaviour
+    public class ItemMovement : MonoBehaviour
     {
         public float moveSpeed = 3f;
         public Transform[] waypoints;
         private int waypointIndex = 0;
         public GameObject explosionPrefab;
-        private Bounds _cameraBounds;
-        private SpriteRenderer _renderer;
 
         public float speed = 3f;
         private Vector3 targetPosition;
 
         void Start()
         {
-            _renderer = GetComponent<SpriteRenderer>();
-            var height = Camera.main.orthographicSize * 2f;
-            var width = height * Camera.main.aspect;
-            _cameraBounds = new Bounds(Vector3.zero, new Vector3(width, height));
-
             SetNewTargetPosition();
         }
 
@@ -37,14 +30,7 @@ namespace Assets.Scripts
 
         void SetNewTargetPosition()
         {
-            var spriteWidth = _renderer.sprite.bounds.extents.x;
-            var spriteHeight = _renderer.sprite.bounds.extents.y;
-
-            var newPositon = Vector3.zero;
-            newPositon.x = Mathf.Clamp(Random.Range(-5f, 5f), _cameraBounds.min.x + spriteWidth, _cameraBounds.max.x - spriteWidth);
-            newPositon.y = Mathf.Clamp(Random.Range(-5f, 5f), _cameraBounds.min.y + spriteHeight, _cameraBounds.max.y - spriteHeight);
-            
-            targetPosition = newPositon;
+            targetPosition = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
         }
 
         void MoveTowardsTarget()

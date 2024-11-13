@@ -41,5 +41,32 @@ namespace Assets.Scripts
         {
             rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
         }
+
+public class PlayerController : MonoBehaviour
+    {
+
+        private void Update()
+        {
+            float move = Input.GetAxis("Horizontal");
+            transform.Translate(new Vector2(move, 0) * Time.deltaTime);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Inimigo"))
+            {
+                Morrer();
+            }
+        }
+
+        private void Morrer()
+        {
+            Debug.Log("O jogador morreu!");
+
+            gameObject.SetActive(false);
+
+        }
     }
+
+}
 }
